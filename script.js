@@ -3,53 +3,66 @@ function getComputerChoice() {
     const weapons = ['rock', 'paper', 'scissors'];
     let randomNumber = Math.floor(Math.random() * weapons.length); 
     let computerChoice = weapons[randomNumber];
-    console.log("Computer's choice: " +computerChoice);
     return computerChoice;
 }
 
 //function to get user input, bypass case sensitive inputs and uppercase them 
 function getPlayerChoice () {
-    let playerChoice = prompt("What is your move?");
-    console.log("Player's choice: " + playerChoice.toLowerCase());
+    let playerChoice = prompt("What is your move?").toLowerCase();
     return playerChoice;
 }
 
-//values that is used in the game round that is empty for now  
-const playerSelection = getPlayerChoice();
-const computerSelection = getComputerChoice();
+let playerScore = 0
+let computerScore = 0
 
 //function to play a r-p-s round
-function playGround (playerSelection, computerSelection) {
+function playRound (playerSelection, computerSelection) {
     if (playerSelection == "paper" && computerSelection == "rock") {
-        return console.log("You win!, " + playerSelection + " beats " + computerSelection);
+        playerScore++;
     }
     else if (playerSelection == "paper" && computerSelection == "scissors") {
-        return console.log("You lose!, " + computerSelection + " beats " + playerSelection);
+        computerScore++;
     }
     else if (playerSelection == "rock" && computerSelection == "scissors") {
-        return console.log("You win!, " + playerSelection + " beats " + computerSelection);
+        playerScore++;
     }
     else if (playerSelection == "rock" && computerSelection == "paper") {
-        return console.log("You lose!, " + computerSelection + " beats " + playerSelection);
+        computerScore++;
     }
     else if (playerSelection == "scissors" && computerSelection == "paper") {
-        return console.log("You win!, " + playerSelection + " beats " + computerSelection);
+        playerScore++;
     }
     else if (playerSelection == "scissors" && computerSelection == "rock") {
-        return console.log("You lose!, " + computerSelection + " beats " + playerSelection);
+        computerScore++;
     }
     else if (playerSelection == computerSelection) {
-        return console.log("Draw!")
+        return "Draw";
     }
     else {
-        return console.log("Please replay!")
+        return "Please replay!"
     }
 }
 
 //show one round result
-playGround(playerSelection, computerSelection)
+//console.log(playRound(playerSelection, computerSelection))
 
 //function to play a game of rock, paper, scissors
 function playGame() {
+    //play a game of 5 rounds and calculate final score
+    for (let i = 0; i < 5; i++) {
+        let playerSelection = getPlayerChoice()
+        let computerSelection = getComputerChoice()
+        playRound(playerSelection, computerSelection)
+    }
 
+    //determine who is the winner
+    if (playerScore > computerScore) {
+        return "You win!, The score is " + playerScore + " to " + computerScore 
+    }
+    else if (playerScore < computerScore) {
+        return "You lose!, The score is " + playerScore + " to " + computerScore 
+    }
 }
+
+//play the game
+console.log(playGame())
